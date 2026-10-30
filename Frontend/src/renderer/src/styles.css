@@ -1,0 +1,1213 @@
+/* ExcelAgent 桌面端样式：浅色主题、两栏布局（会话列表 + 对话） */
+
+:root {
+  --bg: #f7f8fa;
+  --bg-panel: #ffffff;
+  --bg-raised: #f2f4f7;
+  --bg-sunken: #fafbfc;
+  --bg-input: #ffffff;
+  --border: #e3e6eb;
+  --border-strong: #ccd2da;
+  --text: #1f252d;
+  --text-dim: #5c6674;
+  --text-faint: #8b95a3;
+  --accent: #1a73e8;
+  --accent-soft: #e8f0fe;
+  --accent-dim: #1558c0;
+  --ok: #1a7f37;
+  --warn: #b26a00;
+  --danger: #c8352c;
+  --thinking: #4a5563;
+  --mono: 'Cascadia Mono', 'Consolas', 'Courier New', monospace;
+  --shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.06);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Segoe UI', 'Microsoft YaHei', system-ui, sans-serif;
+  font-size: 14px;
+  overflow: hidden;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* ---------------------------- 顶栏 ---------------------------- */
+
+.titlebar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 18px;
+  background: var(--bg-panel);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.brand {
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+.meta {
+  color: var(--text-faint);
+  font-size: 12px;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.pill {
+  font-size: 12px;
+  padding: 2px 9px;
+  border-radius: 10px;
+  background: var(--bg-raised);
+  color: var(--text-dim);
+}
+
+.pill.ok {
+  background: #e6f4ea;
+  color: var(--ok);
+}
+
+.pill.bad {
+  background: #fdecea;
+  color: var(--danger);
+}
+
+.pill.busy {
+  background: #fef3e2;
+  color: var(--warn);
+}
+
+.error-bar {
+  padding: 8px 18px;
+  background: #fdecea;
+  color: #8c2a22;
+  border-bottom: 1px solid #f5c6c2;
+  cursor: pointer;
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.error-close {
+  margin-left: auto;
+  opacity: 0.7;
+}
+
+/* ---------------------------- 布局 ---------------------------- */
+
+.layout {
+  display: grid;
+  grid-template-columns: 264px minmax(0, 1fr);
+  flex: 1;
+  min-height: 0;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0;
+}
+
+.sessions {
+  background: var(--bg-panel);
+  border-right: 1px solid var(--border);
+}
+
+.panel-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-dim);
+  font-size: 12px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.panel-head .spacer {
+  flex: 1;
+}
+
+.empty {
+  padding: 28px 18px;
+  color: var(--text-faint);
+  text-align: center;
+  line-height: 1.9;
+  font-size: 13px;
+}
+
+.empty.small {
+  padding: 10px;
+}
+
+/* ---------------------------- 按钮 ---------------------------- */
+
+button {
+  font-family: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  border-radius: 6px;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-panel);
+  color: var(--text);
+  padding: 4px 10px;
+  transition: background 0.12s, border-color 0.12s, color 0.12s;
+}
+
+button:hover:not(:disabled) {
+  background: var(--bg-raised);
+  border-color: var(--accent);
+  color: var(--accent-dim);
+}
+
+button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--accent-dim);
+  border-color: var(--accent-dim);
+  color: #fff;
+}
+
+.btn-danger {
+  background: #fff;
+  border-color: #e6a9a4;
+  color: var(--danger);
+}
+
+.btn-danger:hover:not(:disabled) {
+  background: #fdecea;
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+.btn-ghost {
+  background: transparent;
+}
+
+.icon-btn {
+  padding: 2px 6px;
+  border: none;
+  background: transparent;
+  color: var(--text-faint);
+  font-size: 12px;
+}
+
+.icon-btn:hover:not(:disabled) {
+  background: var(--bg-raised);
+  color: var(--text);
+}
+
+.icon-btn.danger:hover:not(:disabled) {
+  color: var(--danger);
+}
+
+/* ---------------------------- 会话列表 ---------------------------- */
+
+.session-items {
+  overflow-y: auto;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.session-item {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  position: relative;
+}
+
+.session-item:hover {
+  background: var(--bg-raised);
+}
+
+.session-item.active {
+  background: var(--accent-soft);
+  border-color: #c6dafc;
+}
+
+.session-main {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+  width: 100%;
+  text-align: left;
+  border: none;
+  background: transparent;
+  padding: 7px 9px;
+}
+
+.session-main:hover:not(:disabled) {
+  background: transparent;
+  border-color: transparent;
+  color: var(--text);
+}
+
+.session-title {
+  font-size: 13px;
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+.session-item.active .session-title {
+  color: var(--accent-dim);
+  font-weight: 600;
+}
+
+.session-meta {
+  font-size: 11px;
+  color: var(--text-faint);
+}
+
+.session-actions {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  display: none;
+  gap: 2px;
+}
+
+.session-item:hover .session-actions {
+  display: flex;
+}
+
+.rename-input {
+  width: 100%;
+  padding: 7px 9px;
+  background: var(--bg-input);
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 13px;
+  outline: none;
+}
+
+.confirm {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 9px;
+  font-size: 12px;
+  color: var(--text-dim);
+  border-top: 1px solid var(--border);
+}
+
+.confirm button {
+  padding: 2px 7px;
+  font-size: 12px;
+}
+
+/* ---------------------------- 对话区 ---------------------------- */
+
+.chat {
+  background: var(--bg);
+}
+
+.chat-list {
+  flex: 1;
+  overflow-y: auto;
+  /* 底部留白：最后一条内容能滚到舒服的位置 */
+  padding: 20px 24px min(30vh, 200px);
+}
+
+.turn {
+  margin-bottom: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.bubble {
+  border-radius: 12px;
+  padding: 11px 15px;
+  max-width: 82%;
+  line-height: 1.7;
+  word-break: break-word;
+}
+
+.bubble.user {
+  align-self: flex-end;
+  background: var(--accent);
+  color: #fff;
+  white-space: pre-wrap;
+  box-shadow: var(--shadow-sm);
+}
+
+.bubble.assistant {
+  align-self: flex-start;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+
+.bubble-meta {
+  margin-top: 8px;
+  font-size: 11px;
+  color: var(--text-faint);
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+/* Markdown 内容 */
+.bubble.assistant p {
+  margin: 0 0 8px;
+}
+
+.bubble.assistant p:last-child {
+  margin-bottom: 0;
+}
+
+.bubble.assistant code {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  background: var(--bg-raised);
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+.bubble.assistant pre {
+  background: var(--bg-sunken);
+  padding: 10px;
+  border-radius: 8px;
+  overflow-x: auto;
+  border: 1px solid var(--border);
+}
+
+.bubble.assistant pre code {
+  background: none;
+  padding: 0;
+}
+
+.bubble.assistant table {
+  border-collapse: collapse;
+  margin: 8px 0;
+  font-size: 13px;
+}
+
+.bubble.assistant th,
+.bubble.assistant td {
+  border: 1px solid var(--border-strong);
+  padding: 4px 10px;
+  text-align: left;
+}
+
+.bubble.assistant th {
+  background: var(--bg-raised);
+}
+
+/* 更早的轮次按需展开 */
+.show-earlier {
+  display: block;
+  margin: 0 auto 22px;
+  padding: 5px 14px;
+  background: var(--bg-panel);
+  border: 1px dashed var(--border-strong);
+  border-radius: 14px;
+  font-size: 12px;
+  color: var(--text-faint);
+}
+
+.show-earlier:hover:not(:disabled) {
+  background: var(--bg-raised);
+  border-color: var(--accent);
+  color: var(--accent-dim);
+}
+
+/* 输入区 */
+.composer {
+  display: flex;
+  gap: 8px;
+  padding: 12px 18px;
+  border-top: 1px solid var(--border);
+  background: var(--bg-panel);
+  flex-shrink: 0;
+}
+
+.composer textarea {
+  flex: 1;
+  resize: none;
+  background: var(--bg-input);
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  color: var(--text);
+  padding: 9px 12px;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.6;
+  outline: none;
+}
+
+.composer textarea::placeholder {
+  color: var(--text-faint);
+}
+
+.composer textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.composer textarea:disabled {
+  background: var(--bg-raised);
+}
+
+.send {
+  align-self: flex-end;
+  padding: 9px 22px;
+}
+
+/* ------------------ 执行过程（夹在问题与答案之间）------------------ */
+
+.trace {
+  align-self: stretch;
+  max-width: 82%;
+  background: var(--bg-sunken);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.trace-head {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  width: 100%;
+  padding: 7px 11px;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  text-align: left;
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+.trace-head:hover:not(:disabled) {
+  background: var(--bg-raised);
+  border-color: transparent;
+  color: var(--text);
+}
+
+.trace-label {
+  font-weight: 600;
+}
+
+.trace-brief {
+  color: var(--text-faint);
+}
+
+.trace-live {
+  margin-left: auto;
+  color: var(--warn);
+  font-size: 11px;
+}
+
+.trace-body {
+  padding: 4px 11px 11px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* 过程说明：挂在对应 Agent 卡片下面，在折叠区之外，卡片折叠也始终可见 */
+.step-list {
+  list-style: none;
+  margin: 8px 0 2px 10px;
+  padding: 2px 0 2px 10px;
+  border-left: 2px solid var(--accent-soft);
+}
+
+.step-list li {
+  font-size: 12px;
+  color: var(--text-dim);
+  padding: 2px 0;
+  word-break: break-all;
+}
+
+/* Agent 卡片：整块头部可点，展开后才是具体细则 */
+.agent-card {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--border-strong);
+  border-radius: 8px;
+  padding: 9px 11px;
+}
+
+.agent-card.running {
+  border-left-color: var(--warn);
+}
+
+.agent-card.done {
+  border-left-color: var(--ok);
+}
+
+.agent-head {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  width: 100%;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  text-align: left;
+  font-size: 13px;
+  color: var(--text);
+}
+
+.agent-head:hover:not(:disabled) {
+  background: transparent;
+  border-color: transparent;
+  color: var(--text);
+}
+
+.agent-body {
+  margin-top: 2px;
+}
+
+.agent-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ok);
+  flex-shrink: 0;
+}
+
+.agent-dot.pulse {
+  background: var(--warn);
+  animation: pulse 1.1s ease-in-out infinite;
+}
+
+.agent-name {
+  font-weight: 600;
+}
+
+.agent-time {
+  font-size: 11px;
+  color: var(--text-faint);
+}
+
+.agent-stat {
+  font-size: 11px;
+  color: var(--text-faint);
+}
+
+/* Agent 活动流水线：按「思考 → 它调用的一批工具」分块 */
+.agent-timeline {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* 一块 = 一段思考 + 它决定调用的那批工具 */
+.segment {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+/* 思考内容：直接展示，颜色最深 —— 视觉主体 */
+.reasoning {
+  font-size: 12.5px;
+  line-height: 1.75;
+  color: var(--thinking);
+  white-space: pre-wrap;
+  word-break: break-word;
+  padding-left: 10px;
+  border-left: 2px solid var(--border-strong);
+}
+
+/* ---------- 工具部分：整体比思考更浅，避免抢视线 ---------- */
+
+/* 状态圈：与 Agent 名字的颜色体系一致，一眼区分执行状态 */
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ok); /* 已完成：绿 */
+  flex-shrink: 0;
+}
+
+.status-dot.small {
+  width: 6px;
+  height: 6px;
+}
+
+.status-dot.busy {
+  background: var(--warn); /* 进行中：橙 + 呼吸 */
+  animation: pulse 1.1s ease-in-out infinite;
+}
+
+/* 汇总行：「正在执行工具中……」/「执行工具 N 个」 */
+.tool-group {
+  margin-top: 2px;
+}
+
+.tool-group-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  padding: 3px 6px;
+  background: transparent;
+  border: 1px dashed var(--border);
+  border-radius: 6px;
+  text-align: left;
+  font-size: 12px;
+  color: var(--text-faint);
+}
+
+.tool-group-head:hover:not(:disabled) {
+  background: var(--bg-raised);
+  border-color: var(--border-strong);
+  color: var(--text-dim);
+}
+
+.tool-group-label {
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.tool-group-names {
+  margin-left: auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 56%;
+  opacity: 0.75;
+}
+
+.tool-command-list {
+  margin-top: 5px;
+  padding-left: 8px;
+  border-left: 2px solid var(--bg-raised);
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+/* 单条命令（浅色） */
+.tool-command {
+  border-radius: 5px;
+}
+
+.tool-command.running {
+  background: #fffdf6;
+}
+
+.tool-command-head {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+  width: 100%;
+  padding: 3px 6px;
+  background: transparent;
+  border: none;
+  border-radius: 5px;
+  text-align: left;
+  font-size: 11.5px;
+  color: var(--text-faint);
+}
+
+.tool-command-head:hover:not(:disabled) {
+  background: var(--bg-raised);
+  border-color: transparent;
+  color: var(--text-dim);
+}
+
+.tool-command-head .tool-name {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text-dim);
+  flex-shrink: 0;
+}
+
+/* 命令入参：截断显示的一行 */
+.tool-command-head .tool-args {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-faint);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+  min-width: 0;
+}
+
+.tool-command-head .tool-status {
+  font-size: 10.5px;
+  color: var(--text-faint);
+  flex-shrink: 0;
+  opacity: 0.8;
+}
+
+/* 展开后的明细 */
+.tool-detail {
+  padding: 4px 6px 7px 22px;
+}
+
+.tool-detail-label {
+  font-size: 10.5px;
+  color: var(--text-faint);
+  margin-bottom: 3px;
+}
+
+.tool-command-full,
+.tool-result {
+  margin: 0 0 7px;
+  padding: 6px 8px;
+  background: var(--bg-sunken);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  word-break: break-all;
+  color: var(--text-faint);
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.tool-result {
+  margin-bottom: 0;
+}
+
+.caret {
+  font-size: 10px;
+}
+
+/* ---------------------------- 统计图 ---------------------------- */
+
+.chart-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.chart-gallery.compact {
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 8px;
+}
+
+.chart-item {
+  margin: 0;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.chart-thumb {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: #fff;
+  cursor: zoom-in;
+}
+
+.chart-thumb:hover:not(:disabled) {
+  background: #fff;
+  border-color: transparent;
+}
+
+.chart-thumb img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.chart-item figcaption {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 9px;
+  font-size: 11.5px;
+  color: var(--text-dim);
+  border-top: 1px solid var(--border);
+}
+
+.chart-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chart-type {
+  flex-shrink: 0;
+  margin-left: auto;
+  font-size: 10.5px;
+  padding: 1px 6px;
+  border-radius: 8px;
+  background: var(--accent-soft);
+  color: var(--accent-dim);
+}
+
+/* 大图弹层 */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(24, 29, 36, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px;
+}
+
+.lightbox-inner {
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+  max-height: 100%;
+  background: var(--bg-panel);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 12px 40px rgba(16, 24, 40, 0.28);
+}
+
+.lightbox-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+}
+
+.lightbox-open {
+  font-size: 12px;
+  color: var(--accent);
+  text-decoration: none;
+  padding: 2px 8px;
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+}
+
+.lightbox-open:hover {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+}
+
+.lightbox-inner img {
+  display: block;
+  max-width: min(1400px, 88vw);
+  max-height: 78vh;
+  width: auto;
+  height: auto;
+  background: #fff;
+}
+
+/* 滚动条 */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd2db;
+  border-radius: 5px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #aeb7c2;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* 并行的子任务列表（Master 的拆解结果） */
+.task-list {
+  list-style: none;
+  margin: 0 0 10px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border: 1px solid #e2e6ec;
+  border-radius: 8px;
+  background: #fafbfc;
+  font-size: 12px;
+}
+
+.task-item.running {
+  border-color: #7fb2ff;
+  background: #f2f7ff;
+}
+
+.task-item.done {
+  opacity: 0.85;
+}
+
+.task-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #c3cad4;
+  flex: 0 0 auto;
+}
+
+.task-dot.running {
+  background: #2f7cf6;
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+.task-dot.done {
+  background: #34a853;
+}
+
+.task-intent {
+  flex: 0 0 auto;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: #eef1f5;
+  color: #55606d;
+}
+
+.task-query {
+  flex: 1 1 auto;
+  color: #2c333b;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Agent 卡片上的子任务标签 */
+.agent-task {
+  margin-left: 6px;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: #eef1f5;
+  color: #7a8593;
+  font-size: 11px;
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 缺表搁置：整轮不执行，等待用户补表 */
+.task-item.blocked {
+  border-color: #f0c36d;
+  background: #fffaf0;
+}
+
+.task-dot.blocked {
+  background: #e6a23c;
+}
+
+.task-missing {
+  flex: 0 1 auto;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: #fdf1d9;
+  color: #b9812a;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 45%;
+}
+/* ===== 并行工作流：新的执行过程布局 ===== */
+
+/* 完成后「执行过程」标题后的元信息（用时 · 工具次数） */
+.trace-meta {
+  margin-left: 8px;
+  color: #8a94a0;
+  font-size: 12px;
+}
+
+/* Master 的任务拆分与分配（在 Master 思考上方） */
+.plan-block {
+  margin-bottom: 10px;
+  border: 1px solid #e2e6ec;
+  border-radius: 8px;
+  background: #fbfcfd;
+  overflow: hidden;
+}
+
+.plan-head {
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #55606d;
+  background: #f2f5f8;
+  border-bottom: 1px solid #e9edf2;
+}
+
+.plan-list {
+  list-style: none;
+  margin: 0;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.plan-item {
+  padding: 8px;
+  border: 1px solid #eef1f5;
+  border-radius: 6px;
+  background: #fff;
+  font-size: 12px;
+}
+
+/* 任务那一行（整行可点，折叠 / 展开下面的执行过程） */
+.plan-item-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.plan-item-row:disabled {
+  cursor: default;
+}
+
+/* 挂在任务下面的执行过程（折叠区） */
+.plan-item .task-block-body {
+  margin: 8px 0 0;
+  padding: 8px;
+  border: 1px solid #eef1f5;
+  border-radius: 6px;
+  background: #fbfcfd;
+}
+
+.plan-item.running {
+  border-color: #7fb2ff;
+  background: #f2f7ff;
+}
+
+.plan-item.blocked {
+  border-color: #f0c36d;
+  background: #fffaf0;
+}
+
+.plan-index {
+  flex: 0 0 auto;
+  color: #7a8593;
+  font-weight: 600;
+}
+
+.plan-status {
+  flex: 0 0 auto;
+  font-size: 11px;
+  color: #8a94a0;
+}
+
+.plan-status.running {
+  color: #2f7cf6;
+}
+
+.plan-status.done {
+  color: #34a853;
+}
+
+.plan-status.blocked {
+  color: #b9812a;
+}
+
+/* 兜底块：不属于任何子任务的零散活动 */
+.task-block {
+  margin-bottom: 10px;
+  border: 1px solid #e2e6ec;
+  border-radius: 8px;
+  background: #fff;
+  overflow: hidden;
+}
+
+.task-block-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+  background: #f5f7fa;
+  border-bottom: 1px solid #e9edf2;
+  font-size: 12px;
+}
+
+.task-block-title {
+  font-weight: 600;
+  color: #3b4552;
+}
+
+.task-block-query {
+  color: #8a94a0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 45%;
+}
+
+.task-block-body {
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+
+

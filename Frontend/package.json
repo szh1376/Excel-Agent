@@ -1,0 +1,29 @@
+{
+  "name": "excelagent-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "description": "ExcelAgent 桌面端界面：对话管理、工作流时序、思考过程",
+  "main": "./out/main/index.js",
+  "scripts": {
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "preview": "electron-vite preview",
+    "typecheck": "tsc --noEmit -p tsconfig.node.json && tsc --noEmit -p tsconfig.web.json"
+  },
+  "dependencies": {
+    "jiti": "^2.7.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-markdown": "^10.1.0",
+    "zustand": "^5.0.8"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@vitejs/plugin-react": "^5.1.0",
+    "electron": "^38.2.1",
+    "electron-vite": "^4.0.0",
+    "typescript": "^5.9.3",
+    "vite": "^7.1.0"
+  }
+}

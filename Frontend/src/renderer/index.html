@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--
+      只允许连本机后端与 Vite 开发服务，不放行外部脚本。
+      统计图是后端 /api/charts 提供的图片，所以 img-src 必须放行 127.0.0.1。
+    -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; connect-src 'self' ws://127.0.0.1:* http://127.0.0.1:*; img-src 'self' data: http://127.0.0.1:*; style-src 'self' 'unsafe-inline'"
+    />
+    <title>ExcelAgent</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="./src/main.tsx"></script>
+  </body>
+</html>
